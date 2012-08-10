@@ -1,0 +1,46 @@
+pwnat, by Samy Kamkar, is a tool that allows any client
+behind a NAT to communicate with a server behind a
+separate NAT with *no* port forwarding and *no* DMZ
+setup on any routers in order to directly communicate
+with each other.
+
+There is no middle man, no proxy, no 3rd party, no UPnP
+required, no spoofing, no DNS tricks.
+
+More importantly, the client can then connect to any
+host or port on any remote host or to a fixed host and
+port decided by the server.
+
+Simply put, this is a proxy server that works behind a NAT,
+even when the client is behind a NAT.
+
+pwnat - http://samy.pl/pwnat
+by Samy Kamkar
+
+pwnat is based off of udptunnel by Daniel Meekins:
+http://code.google.com/p/udptunnel/
+
+usage: ./pwnat <-s | -c> <args>
+
+  -c    client mode
+        <args>: [local ip] <local port> <proxy host> [proxy port (def:2222)] <remote host> <remote port>
+
+  -s    server mode
+        <args>: [local ip] [proxy port (def:2222)] [[allowed host]:[allowed port] ...]
+
+  -6    use IPv6
+  -v    show debug output (up to 2)
+  -h    show this help and exit
+
+
+EXAMPLE:
+
+Server side allowing anyone to proxy:
+  ./pwnat -s
+
+Client wanting to connect to google.com:80:
+  ./pwnat -c 8000 <pwnat.server.com> google.com 80
+
+Then, browse to http://localhost:8000 to visit the google!
+
+

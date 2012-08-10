@@ -1,0 +1,10 @@
+0.3-beta - 04/07/2010 - samy
+ - added support for cygwin
+ - added support for freebsd
+ - patch to fix correct source ip on sending icmps on some kernels, thanks to Taka Nori
+
+0.2-beta - 03/28/2010 - samy
+ - patch to fix potential segfault, thanks to Mark Landis
+
+0.1-beta - 01/22/2010 - samy
+ - initial release

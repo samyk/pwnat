@@ -1,0 +1,54 @@
+#
+# Project: udptunnel
+# File: Makefile.Win32
+#
+# Copyright (C) 2009 Daniel Meekins
+# Contact: dmeekins - gmail
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+CC=cl.exe
+CFLAGS=/nologo /DWIN32 /c
+LDFLAGS=
+LIBS="c:\Program Files\Microsoft SDKs\Windows\v6.0A\lib\WS2_32.Lib"
+
+all: pwnat.exe
+
+OBJS=socket.obj message.obj client.obj list.obj destination.obj udpserver.obj udpclient.obj pwnat.obj xgetopt.obj gettimeofday.obj
+pwnat.exe: $(OBJS)
+	link.exe /NOLOGO /OUT:pwnat.exe $(LDFLAGS) $(OBJS) $(LIBS)
+
+list.obj: list.c list.h common.h
+	$(CC) $(CFLAGS) list.c
+socket.obj: socket.c socket.h common.h
+	$(CC) $(CFLAGS) socket.c
+client.obj: client.c client.h common.h
+	$(CC) $(CFLAGS) client.c
+message.obj: message.c message.h common.h
+	$(CC) $(CFLAGS) message.c
+destination.obj: destination.c destination.h
+	$(CC) $(CFLAGS) destination.c
+udpclient.obj: udpclient.c list.h socket.h client.h message.h common.h
+	$(CC) $(CFLAGS) udpclient.c
+udpserver.obj: udpserver.c list.h socket.h client.h message.h common.h
+	$(CC) $(CFLAGS) udpserver.c
+pwnat.obj: pwnat.c common.h
+	$(CC) $(CFLAGS) pwnat.c
+xgetopt.obj: xgetopt.c xgetopt.h
+	$(CC) $(CFLAGS) xgetopt.c
+gettimeofday.obj: gettimeofday.c gettimeofday.h
+	$(CC) $(CFLAGS) gettimeofday.c
+
+clean:
+	del *.obj pwnat.exe
