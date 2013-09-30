@@ -60,7 +60,20 @@ static void disconnect_and_remove_client(uint16_t id, list_t *clients,
                                          fd_set *fds);
 static void signal_handler(int sig);
 
-int udpclient(int argc, char *argv[])
+bool isnumber(const char* str) {
+    if (!str) {
+        return false;
+    }
+
+    char* end;
+    strtol(str, &end, 10);
+    return *end == '\0';
+}
+
+/*
+ * argv: [local ip] <local port> <proxy host> [proxy port] <remote host> <remote port>
+ */
+int udpclient(int argc, char* argv[])
 {
     char *lhost, *lport, *phost, *pport, *rhost, *rport;
     list_t *clients;
@@ -72,7 +85,7 @@ int udpclient(int argc, char *argv[])
     socket_t *udp_sock = NULL;
     char data[MSG_MAX_LEN];
     char addrstr[ADDRSTRLEN];
-	char pport_s[6];
+    char pport_s[6] = "2222";
     
     struct timeval curr_time;
     struct timeval check_time;
@@ -89,29 +102,27 @@ int udpclient(int argc, char *argv[])
     int ret;
     int i;
 
-	int icmp_sock = 0;
+    int icmp_sock = 0;
     int timeexc = 0;
 
-	struct sockaddr_in src, dest, rsrc;
-	struct hostent *hp;
-	uint32_t timeexc_ip;
+    struct sockaddr_in src, dest, rsrc;
+    struct hostent *hp;
+    uint32_t timeexc_ip;
 
     signal(SIGINT, &signal_handler);
 
+    // Parse arguments
     i = 0;    
-	if (index(argv[i], 58) || index(argv[i], 46))
-    	lhost = argv[i++];
-	else	
-		lhost = NULL;
+    if (!isnumber(argv[i]))
+        lhost = argv[i++];
+    else	
+        lhost = NULL;
     lport = argv[i++];
     phost = argv[i++];
-	if (index(argv[i], 58) || index(argv[i], 46))
-	{
-		snprintf(pport_s, 5, "2222");
-		pport = pport_s;
-	}
-	else	
-    	pport = argv[i++];
+    if (isnumber(argv[i]))
+        pport = argv[i++];
+    else	
+        pport = pport_s;
     rhost = argv[i++];
     rport = argv[i++];
 
