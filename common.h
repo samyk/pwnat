@@ -24,8 +24,20 @@
 
 #include <stdio.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+
+#ifdef WIN32
+#  include <winsock2.h>
+#  include <ws2tcpip.h>
+    WINSOCK_API_LINKAGE const char WSAAPI inet_ntop(int af, const void src, char *dst, socklen_t size);
+    WINSOCK_API_LINKAGE int WSAAPI inet_pton(int af, const char* src, void *dst);
+    typedef unsigned char	    u_int8_t;
+    typedef unsigned short	    u_int16_t;
+
+#else
+#  include <sys/socket.h>
+#  include <netinet/in.h>
+#endif
+
 #include <limits.h>
 
 
@@ -84,5 +96,18 @@ typedef unsigned int uint32_t;
         }                                                                     \
     } while (0)
 #endif /* SOLARIS */
+
+#ifdef WIN32
+#define timeradd(a, b, result)                                                \
+    do {                                                                      \
+        (result)->tv_sec = (a)->tv_sec + (b)->tv_sec;                         \
+        (result)->tv_usec = (a)->tv_usec + (b)->tv_usec;                      \
+        if ((result)->tv_usec >= 1000000)                                     \
+        {                                                                     \
+            ++(result)->tv_sec;                                               \
+            (result)->tv_usec -= 1000000;                                     \
+        }                                                                     \
+    } while (0)
+#endif
 
 #endif /* COMMON_H */

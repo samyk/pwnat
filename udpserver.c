@@ -124,7 +124,7 @@ int udpserver(int argc, char *argv[])
 	}
     else if(allowed_start == 1)
     {
-		if (index(argv[0], 58) || index(argv[0], 46))
+		if (strchr(argv[0], 58) || strchr(argv[0], 46))
 		{
 			strncpy(host_str, argv[0], sizeof(host_str));
 			host_str[sizeof(host_str)-1] = 0;

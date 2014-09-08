@@ -10,12 +10,13 @@
 #include <sys/fcntl.h>
 #include <sys/time.h>
 #include <sys/select.h>
-#else
-#include "gettimeofday.h"
-#endif
-
 #include <netinet/in.h> /* IPPROTO_RAW def. */
 #include <netinet/ip.h>
+#else
+#include "gettimeofday.h"
+#define IPDEFTTL	64
+#endif
+
 
 
 #include "common.h"
@@ -37,9 +38,14 @@ int create_listen_socket()
 		return 0;
 	}
 
-    if (fcntl(listen_sock, F_SETFL, O_NONBLOCK) == -1)
+#ifdef WIN32
+	unsigned long flags = 1;
+	if (ioctlsocket(listen_sock, FIONBIO, &flags) != SOCKET_ERROR)
+#else
+	if (fcntl(listen_sock, F_SETFL, O_NONBLOCK) == -1)
+#endif
 	{
-        printf("F_SETFL: %s", strerror(errno));
+		printf("F_SETFL: %s", strerror(errno));
 		return 0;
 	}
 
