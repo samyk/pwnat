@@ -89,9 +89,9 @@ int udpserver(int argc, char *argv[])
     int allowed_start;
     int ret;
 
-	int icmp_sock = 0;
-	int listen_sock = 0;
-	int timeexc = 0;
+    int icmp_sock = 0;
+    int listen_sock = 0;
+    int timeexc = 0;
     struct sockaddr_in dest_addr, rsrc;
     uint32_t timeexc_ip;
     struct hostent *host_ent;
@@ -117,25 +117,25 @@ int udpserver(int argc, char *argv[])
       }
 
     /* Get the port and address to listen on from command line */
-	if (allowed_start == 0)
-	{
-		sprintf(port_str, "2222");
-		host_str[0] = 0;
-	}
+    if (allowed_start == 0)
+    {
+        sprintf(port_str, "2222");
+        host_str[0] = 0;
+    }
     else if(allowed_start == 1)
     {
-		if (strchr(argv[0], 58) || strchr(argv[0], 46))
-		{
-			strncpy(host_str, argv[0], sizeof(host_str));
-			host_str[sizeof(host_str)-1] = 0;
-			sprintf(port_str, "2222");
-		}
-		else
-		{
-			strncpy(port_str, argv[0], sizeof(port_str));
-			port_str[sizeof(port_str)-1] = 0;
-			host_str[0] = 0;
-		}
+        if (strchr(argv[0], 58) || strchr(argv[0], 46))
+        {
+            strncpy(host_str, argv[0], sizeof(host_str));
+            host_str[sizeof(host_str)-1] = 0;
+            sprintf(port_str, "2222");
+        }
+        else
+        {
+            strncpy(port_str, argv[0], sizeof(port_str));
+            port_str[sizeof(port_str)-1] = 0;
+            host_str[0] = 0;
+        }
     }
     else if(allowed_start == 2)
     {
@@ -172,18 +172,18 @@ int udpserver(int argc, char *argv[])
         goto done;
 
     /* Get info about localhost IP */
-	if (!(strlen(host_str)>0))
-	{
-		char szHostName[255];
-		gethostname(szHostName, 255);
-		host_ent = gethostbyname(szHostName);
-	}
-	else
-	{
-		host_ent = gethostbyname(host_str);
-	}
-	memset(&rsrc, 0, sizeof(struct sockaddr_in));
-    timeexc_ip				= *(uint32_t*)host_ent->h_addr_list[0];
+    if (!(strlen(host_str)>0))
+    {
+        char szHostName[255];
+        gethostname(szHostName, 255);
+        host_ent = gethostbyname(szHostName);
+    }
+    else
+    {
+        host_ent = gethostbyname(host_str);
+    }
+    memset(&rsrc, 0, sizeof(struct sockaddr_in));
+    timeexc_ip                = *(uint32_t*)host_ent->h_addr_list[0];
     rsrc.sin_family        = AF_INET;
     rsrc.sin_port          = 0;
     rsrc.sin_addr.s_addr   = timeexc_ip;
@@ -195,9 +195,10 @@ int udpserver(int argc, char *argv[])
 
     if(!udp_sock)
         goto done;
-	if(debug_level >= DEBUG_LEVEL1)
-		printf("Listening on UDP %s\n",
-		   sock_get_str(udp_sock, addrstr, sizeof(addrstr)));
+
+    if(debug_level >= DEBUG_LEVEL1)
+        printf("Listening on UDP %s\n",
+               sock_get_str(udp_sock, addrstr, sizeof(addrstr)));
     
     /* Create empty udp socket for getting source address of udp packets */
     udp_from = sock_create(NULL, NULL, ipver, SOCK_TYPE_UDP, 0, 0);
@@ -225,55 +226,55 @@ int udpserver(int argc, char *argv[])
         exit(1);
     }
 
-	struct sockaddr_in sa;
-	memset(&sa, 0, sizeof(struct sockaddr_in));
+    struct sockaddr_in sa;
+    memset(&sa, 0, sizeof(struct sockaddr_in));
 
     sa.sin_family = PF_INET;
     sa.sin_port = htons(atoi(port_str));
     sa.sin_addr.s_addr = INADDR_ANY;
 
     //if( bind(sock, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in))!= 0)
-		//printf("bind failed\n");
+        //printf("bind failed\n");
 
-	int ip;
-	char *ips;
-	unsigned char *packet;
-	ips = malloc(16);
-	packet = malloc(IP_MAX_SIZE);
+    int ip;
+    char *ips;
+    unsigned char *packet;
+    ips = malloc(16);
+    packet = malloc(IP_MAX_SIZE);
 
     while(running)
     {
         if(!timerisset(&timeout))
             timeout.tv_usec = 50000;
 
-		/* Every 5 seconds, send "fake" ICMP packet */
-		if (timeexc++ % 100 == 0)
-		{
-			send_icmp(icmp_sock, &rsrc, &dest_addr, (struct sockaddr_in*)0, 1);
-		}
+        /* Every 5 seconds, send "fake" ICMP packet */
+        if (timeexc++ % 100 == 0)
+        {
+            send_icmp(icmp_sock, &rsrc, &dest_addr, (struct sockaddr_in*)0, 1);
+        }
 
-		/* Wait for random client to penetrate our NAT...you nasty client! */
-		while ((ip = recv(listen_sock, packet, 100, 0)) > 0)
-		{
-			/* If not ICMP and not TTL exceeded */
-			if (packet[9] != 1 || packet[20] != 11 || packet[21] != 0)
-				break;
+        /* Wait for random client to penetrate our NAT...you nasty client! */
+        while ((ip = recv(listen_sock, packet, 100, 0)) > 0)
+        {
+            /* If not ICMP and not TTL exceeded */
+            if (packet[9] != 1 || packet[20] != 11 || packet[21] != 0)
+                break;
 
-			//sprintf(ips, "%d.%d.%d.%d", packet[12], packet[13], packet[14], packet[15]);
-			sprintf(ips, "%d.%d.%d.%d", (unsigned char)packet[12],(unsigned char) packet[13],(unsigned char) packet[14],(unsigned char) packet[15]);
-			memset(packet, 0, ip);
+            //sprintf(ips, "%d.%d.%d.%d", packet[12], packet[13], packet[14], packet[15]);
+            sprintf(ips, "%d.%d.%d.%d", (unsigned char)packet[12],(unsigned char) packet[13],(unsigned char) packet[14],(unsigned char) packet[15]);
+            memset(packet, 0, ip);
 
-			printf ("Got packet from %s\n",ips);
+            printf ("Got packet from %s\n",ips);
 
-			host_ent = gethostbyname(ips);
-			memcpy(&(sa.sin_addr), host_ent->h_addr, host_ent->h_length);
-			inet_pton(PF_INET, ips, &(sa.sin_addr));
+            host_ent = gethostbyname(ips);
+            memcpy(&(sa.sin_addr), host_ent->h_addr, host_ent->h_length);
+            inet_pton(PF_INET, ips, &(sa.sin_addr));
 
-			printf("Got connection request from %s\n", ips);
+            printf("Got connection request from %s\n", ips);
 
-			/* Send packet to create UDP pinhole */
-			sendto(udp_sock->fd, ips, 0, 0, (struct sockaddr*)&sa, sizeof(struct sockaddr));
-		}
+            /* Send packet to create UDP pinhole */
+            sendto(udp_sock->fd, ips, 0, 0, (struct sockaddr*)&sa, sizeof(struct sockaddr));
+        }
 
         /* Reset the file desc. set */
         read_fds = client_fds;
