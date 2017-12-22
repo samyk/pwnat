@@ -39,6 +39,9 @@ struct sockaddr_in remote;
 int debug_level = 1; //NO_DEBUG;
 int ipver = SOCK_IPV4;
 
+int reuseaddr = 0;
+int reuseport = 0;
+
 int udpclient(int argc, char *argv[]);
 int udpserver(int argc, char *argv[]);
 void usage(char *progname);
@@ -54,7 +57,7 @@ int main(int argc, char *argv[])
     ERROR_GOTO(ret != 0, "WSAStartup() failed", error);
 #endif
     
-    while((ret = getopt(argc, argv, "hscv6")) != EOF)
+    while((ret = getopt(argc, argv, "hscv6ap")) != EOF)
     {
         switch(ret)
         {
@@ -68,6 +71,14 @@ int main(int argc, char *argv[])
                 
             case 'c':
                 isserv = 0;
+                break;
+
+            case 'a':
+                reuseaddr = 1;
+                break;
+
+            case 'p':
+                reuseport = 1;
                 break;
 
             case 'v':
@@ -117,5 +128,7 @@ void usage(char *progname)
            "        <args>: [local ip] [proxy port (def:2222)] [[allowed host]:[allowed port] ...]\n"
            "  -6    use IPv6\n"
            "  -v    show debug output (up to 2)\n"
+           "  -a    reuse address\n"
+           "  -p    reuse port\n"
            "  -h    show this help and exit\n");
 }
