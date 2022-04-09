@@ -1,0 +1,47 @@
+PWNAT(1)     proxy server that works behind client+server NATs      PWNAT(1)
+
+NAME
+       pwnat - proxy server that works behind both client and server NATs
+
+SYNOPSIS
+        ./pwnat <-s | -c> <args>
+
+DESCRIPTION
+       There  is no middle man, no proxy, no 3rd party, no UPnP required, no
+       spoofing, or DNS tricks.  The  server  does  not  need  to  know  the
+       client's  IP address before connecting.  More importantly, the client
+       can then connect to any host or port on any remote host or to a fixed
+       host and port decided by the server.
+
+OPTIONS
+       -c     client  mode:  <args>:  [local  ip]  <local port> <proxy host>
+              [proxy port (def:2222)] <remote host> <remote port>
+
+       -s     server mode: <args>: [local ip] [proxy port (def:2222)]  [[al‐
+              lowed host]:[allowed port] ...]
+
+       -6     use IPv6
+
+       -v     show debug output (up to 2)
+
+       -h     show this help and exit
+
+EXAMPLES
+       1.  Server side allowing anyone to proxy: pwnat -s
+
+       2.  Client  wanting  to  connect to google.com:80: pwnat -c 8000 <pw‐
+           nat.server.com> google.com 80
+
+       3.  browse to visit the google: http://localhost:8000
+
+REPORTING BUGS
+       To report a  bug  please  visit  pwnat  issues  tracking  system  at:
+       https://github.com/samyk/pwnat/issues
+
+AUTHORS
+       Written by Samy Kamkar <pwnat@samy.pl>. Tunneling portion  based  off
+       of udptunnel by Daniel Meekins Contact: dmeekins - gmail. This manual
+       page was written by Josenison F. da Silva  <nilsonfsilva@hotmail.com>
+       for the Debian project (but may be used by others).
+
+PWNAT 0.3                         Abr 2022                          PWNAT(1)
