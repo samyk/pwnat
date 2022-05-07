@@ -6,7 +6,7 @@ separate NAT with **no** port forwarding and **no** DMZ
 setup on any routers in order to directly communicate
 with each other.
 
-There is no middle man, no proxy, no 3rd party, no UPnP
+There is no middle man, no proxy, no third party, no UPnP
 required, no spoofing, no DNS tricks. The server does
 not need to know the client's IP address before connecting.
 
@@ -46,7 +46,7 @@ Client wanting to connect to google.com:80:
 ./pwnat -c 8000 <pwnat.server.com> google.com 80
 ```
 
-Then, browse to `http://localhost:8000` to visit the google!
+Then, browse to `http://localhost:8000` to visit google!
 
 
 # FAQ
@@ -141,7 +141,7 @@ Server (1.2.3.4): ICMP Echo Request -> 3.3.3.3
 ...
 Client (6.7.8.9): ICMP Time Exceeded (includes ICMP Echo Request to 3.3.3.3) -> 1.2.3.4
 Server's NAT: Sees server's Echo Request in client's Time Exceeded packet,
-    sends entire packet to server because it matches server's outgoing packet
+sends entire packet to server because it matches server's outgoing packet
 
 Don't believe me? Just traceroute any host behind your NAT. You'll notice
 incoming packets coming in from random IP addresses your router knows
@@ -172,7 +172,7 @@ drops every one of them. Machine B does not stop.
 
 Once you begin the `pwnat` client on machine A, it begins sending UDP
 packets to machine B. Note: `pwnat` defaults source and destination
-ports to 2222. Any unprivileged user can set UDP source and dest ports.
+ports to 2222. Any unprivileged user can set UDP source and destination ports.
 Normally the UDP packets that machine A is sending to NAT B would get dropped.
 However, since machine B is sending similar packets OUT, NAT B assumes
 these are responses and lets them back in. Once machine B sees these packets,
@@ -186,7 +186,7 @@ Note: There is a keep-alive process on the `pwnat` server and client that
 always keeps the UDP "session" active. The packets it sends have a 0 byte
 payload and are only sent when the client is not sending data out. Otherwise,
 the fastest it will possibly send the keep-alive packets is one packet every 5
-seconds. If any other type of data is traveling through the tunnel, no
+seconds. If any other type of data is travelling through the tunnel, no
 keep-alive packets will be transmitted.
 
 
