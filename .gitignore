@@ -1,2 +1,3 @@
-*.o
-pwnat
+obj/*
+pwnat*
+.DS_Store

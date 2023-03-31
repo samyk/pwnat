@@ -43,7 +43,7 @@ Server side allowing anyone to proxy:
 
 Client wanting to connect to google.com:80:
 ```bash
-./pwnat -c 8000 <pwnat.server.com> google.com 80
+./pwnat -c 8000 pwnat.server.com google.com 80
 ```
 
 Then, browse to `http://localhost:8000` to visit google!
