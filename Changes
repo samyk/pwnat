@@ -1,3 +1,7 @@
+0.3.1-beta - 03/30/2023 - serge
+ - fixed bug: Doesn't stop if "Couldn't create privileged raw socket"
+ - fixed bug: Segmentation fault because of unknown <proxy_host>
+
 0.3-beta - 04/07/2010 - samy
  - added support for cygwin
  - added support for freebsd
