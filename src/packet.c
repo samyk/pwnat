@@ -34,7 +34,7 @@ int create_listen_socket()
     listen_sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     if (listen_sock < 0)
     {
-        printf("Couldn't create privileged icmp socket: %s\n", strerror(errno));
+        printf("Couldn't create privileged icmp socket (you likely need to `sudo` or run as root): %s\n", strerror(errno));
         return -1;
     }
 
