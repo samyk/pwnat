@@ -59,7 +59,7 @@ int create_icmp_socket()
     icmp_sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
     if (icmp_sock < 0)
     {
-        printf("Couldn't create privileged raw socket: %s\n", strerror(errno));
+        printf("Couldn't create privileged raw socket (you likely need to `sudo` or run as root): %s\n", strerror(errno));
         return -1;
     }
 
