@@ -5,7 +5,7 @@
 //#include <windows.h>
 #include <winsock2.h>
 
-/*
+
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
   #define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
 #else
@@ -14,8 +14,8 @@
 
 struct timezone
 {
-  int  tz_minuteswest; /* minutes W of Greenwich *
-  int  tz_dsttime;     /* type of dst correction *
+  int  tz_minuteswest; /* minutes W of Greenwich */
+  int  tz_dsttime;     /* type of dst correction */
 };
 
 int gettimeofday(struct timeval *tv, struct timezone *tz);
@@ -30,4 +30,4 @@ int gettimeofday(struct timeval *tv, struct timezone *tz);
             (result)->tv_usec -= 1000000;                                     \
         }                                                                     \
     } while (0)
-*/
+

@@ -25,11 +25,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#ifdef WIN32
+#ifdef __WIN32
 #  include <winsock2.h>
 #  include <ws2tcpip.h>
-    WINSOCK_API_LINKAGE const char WSAAPI inet_ntop(int af, const void src, char *dst, socklen_t size);
-    WINSOCK_API_LINKAGE int WSAAPI inet_pton(int af, const char* src, void *dst);
+    // WINSOCK_API_LINKAGE const char WSAAPI inet_ntop(int af, const void src, char *dst, socklen_t size);
+    // WINSOCK_API_LINKAGE int WSAAPI inet_pton(int af, const char* src, void *dst);
     typedef unsigned char	    u_int8_t;
     typedef unsigned short	    u_int16_t;
 
@@ -49,14 +49,14 @@
 extern int opt_debug;
 extern struct sockaddr_in remote;
 
-#ifdef WIN32
+#ifdef __WIN32
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 #endif
 
 /* cl.exe has a different 'inline' keyword for some dumb reason */
-#ifdef WIN32
+#ifdef __WIN32
 #define _inline_ __inline
 #else
 #define _inline_ inline
@@ -97,7 +97,7 @@ typedef unsigned int uint32_t;
     } while (0)
 #endif /* SOLARIS */
 
-#ifdef WIN32
+#ifdef __WIN32
 #define timeradd(a, b, result)                                                \
     do {                                                                      \
         (result)->tv_sec = (a)->tv_sec + (b)->tv_sec;                         \

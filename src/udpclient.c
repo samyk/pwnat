@@ -26,7 +26,7 @@
 #include <time.h>
 #include <sys/types.h>
 
-#ifndef WIN32
+#ifndef __WIN32
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/select.h>
@@ -140,7 +140,11 @@ int udpclient(int argc, char* argv[])
     memset(&src, 0, sizeof(struct sockaddr_in));
     hp = gethostbyname(phost);
     if (!hp) {
-        printf("Couldn't resolve server address: '%s': %s\n", phost, hstrerror(h_errno));
+        #ifndef __WIN32
+            printf("Couldn't resolve server address: '%s': %s\n", phost, hstrerror(h_errno));
+        #else
+            printf("Couldn't resolve server address: '%s': %s\n", phost, WSAGetLastError(h_errno));
+        #endif
         return 1;
     }
     timeexc_ip            = *(uint32_t*)hp->h_addr_list[0];
@@ -342,12 +346,12 @@ int udpclient(int argc, char* argv[])
                     ret = client_send_udp_data(client);
 #if 0 /* if udptunnel is taking up 100% of cpu, try including this */
                 else if(ret == 1)
-#ifdef WIN32
+#ifdef __WIN32
                     _sleep(1);
 #else
                     usleep(1000); /* Quick hack so doesn't use 100% of CPU if
                                      data wasn't ready yet (waiting for ack) */
-#endif /*WIN32*/
+#endif /*__WIN32*/
 #endif /*0*/          
                 
                 if(ret < 0)

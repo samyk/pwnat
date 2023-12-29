@@ -22,10 +22,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#ifndef WIN32
+#ifndef __WIN32
 #include <inttypes.h>
 #include <sys/time.h>
-#endif /*WIN32*/
+#endif /*__WIN32*/
 
 #include "common.h"
 #include "socket.h"
