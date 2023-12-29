@@ -22,14 +22,14 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#ifndef __WIN32
+#ifndef _WIN32
 #include <inttypes.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #else
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#endif /*__WIN32*/
+#endif /*_WIN32*/
 
 #include "common.h"
 

@@ -24,7 +24,7 @@
 #include <string.h>
 #include <signal.h>
 
-#ifndef __WIN32
+#ifndef _WIN32
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/select.h>
@@ -347,12 +347,12 @@ int udpserver(int argc, char *argv[])
                     ret = client_send_udp_data(client);
 #if 0 /* if udptunnel is taking up 100% of cpu, try including this */
                 else if(ret == 1)
-#ifdef __WIN32
+#ifdef _WIN32
                     _sleep(1);
 #else
                     usleep(1000); /* Quick hack so doesn't use 100% CPU if
                                      data wasn't ready yet (waiting for ack) */
-#endif /*__WIN32*/
+#endif /*_WIN32*/
 #endif /*0*/
                 if(ret == -2)
                 {

@@ -1,6 +1,6 @@
 #
 # Project: udptunnel
-# File: Makefile.__WIN32
+# File: Makefile._WIN32
 #
 # Copyright (C) 2009 Daniel Meekins
 # Contact: dmeekins - gmail
@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 CC=cl.exe
-CFLAGS=/nologo /D__WIN32 /c
+CFLAGS=/nologo /D_WIN32 /c
 LDFLAGS=
 LIBS="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\WS2_32.Lib"
 
