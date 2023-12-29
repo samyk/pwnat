@@ -1,4 +1,3 @@
-
 #ifndef PACKET_T_H 
 #define PACKET_T_H 
 
@@ -17,6 +16,11 @@
 	#include	<syslog.h>
 	#include	<pwd.h>
 	#include	<grp.h>
+	#include 	<sys/time.h>
+#else
+  	#include	<sys/timeb.h>
+	#include 	<io.h>
+	#include 	<process.h>
 #endif /* !__WIN32 */
 	#include	<stdarg.h>
 	// #include	<unistd.h>
@@ -24,12 +28,10 @@
   	#include	<stdlib.h>
   	#include	<string.h>
   	#include	<time.h>
-  	#include	<sys/timeb.h>
-	#include 	<io.h>
-	#include 	<process.h>
+	
   	#include	<signal.h>
   	#include	<stdint.h>
-
+	
 #ifdef __WIN32
 	#include    <winsock2.h>
 	typedef int socklen_t;
