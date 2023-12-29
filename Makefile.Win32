@@ -21,10 +21,12 @@
 CC=cl.exe
 CFLAGS=/nologo /D__WIN32 /c
 LDFLAGS=
-# LIBS="c:\Program Files\Microsoft SDKs\Windows\v6.0A\lib\WS2_32.Lib"
 LIBS="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\WS2_32.Lib"
 
-all: pwnat.exe
+all: pre-build pwnat.exe
+
+pre-build:
+	@if not exist obj mkdir obj
 
 OBJS=obj/socket.obj obj/packet.obj obj/message.obj obj/client.obj obj/list.obj obj/destination.obj obj/udpserver.obj obj/udpclient.obj obj/pwnat.obj obj/xgetopt.obj obj/gettimeofday.obj
 pwnat.exe: $(OBJS)
