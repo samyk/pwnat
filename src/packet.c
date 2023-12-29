@@ -4,7 +4,7 @@
 #include <string.h>
 #include <signal.h>
 
-#ifndef WIN32
+#ifndef _WIN32
 #include <unistd.h>
 #include <sys/socket.h>
 #include <fcntl.h>
@@ -38,7 +38,7 @@ int create_listen_socket()
         return -1;
     }
 
-#ifdef WIN32
+#ifdef _WIN32
     unsigned long flags = 1;
     if (ioctlsocket(listen_sock, FIONBIO, &flags) != SOCKET_ERROR)
 #else

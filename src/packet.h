@@ -1,9 +1,8 @@
-
 #ifndef PACKET_T_H 
 #define PACKET_T_H 
 
 //	Includes
-#ifndef WIN32
+#ifndef _WIN32
   	#include	<unistd.h>
   	#include	<sys/types.h>
   	#include	<sys/socket.h>
@@ -17,18 +16,23 @@
 	#include	<syslog.h>
 	#include	<pwd.h>
 	#include	<grp.h>
-#endif /* !WIN32 */
+	#include 	<sys/time.h>
+#else
+  	#include	<sys/timeb.h>
+	#include 	<io.h>
+	#include 	<process.h>
+#endif /* !_WIN32 */
 	#include	<stdarg.h>
-	#include	<unistd.h>
+	// #include	<unistd.h>
   	#include	<stdio.h>
   	#include	<stdlib.h>
   	#include	<string.h>
   	#include	<time.h>
-  	#include	<sys/time.h>
+	
   	#include	<signal.h>
   	#include	<stdint.h>
-
-#ifdef WIN32
+	
+#ifdef _WIN32
 	#include    <winsock2.h>
 	typedef int socklen_t;
 	typedef uint32_t in_addr_t;
@@ -39,7 +43,7 @@
 		u_int8_t  ether_shost[ETH_ALEN];      /* source ether addr    */
 		u_int16_t ether_type;                 /* packet type ID field */
 	};
-#endif /* WIN32 */
+#endif /* _WIN32 */
 
 //	Constants
 #define	false		0

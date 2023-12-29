@@ -22,10 +22,10 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#ifndef WIN32
+#ifndef _WIN32
 #include <inttypes.h>
 #include <arpa/inet.h>
-#endif /*WIN32*/
+#endif /*_WIN32*/
 
 #include "common.h"
 #include "socket.h"
@@ -44,7 +44,7 @@
 #define MSG_TYPE_ACK0      0x07
 #define MSG_TYPE_ACK1      0x08
 
-#ifndef WIN32
+#ifndef _WIN32
 struct msg_hdr
 {
     uint16_t client_id;
@@ -60,7 +60,7 @@ struct msg_hdr
     uint16_t length;
 };
 #pragma pack(pop)
-#endif /*WIN32*/
+#endif /*_WIN32*/
 
 typedef struct msg_hdr msg_hdr_t;
 

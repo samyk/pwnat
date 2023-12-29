@@ -22,9 +22,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef WIN32
+#ifndef _WIN32
 #include <sys/time.h>
-#endif /*WIN32*/
+#endif /*_WIN32*/
 
 #include "common.h"
 #include "client.h"

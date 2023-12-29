@@ -1,6 +1,6 @@
 #
 # Project: udptunnel
-# File: Makefile.Win32
+# File: Makefile._WIN32
 #
 # Copyright (C) 2009 Daniel Meekins
 # Contact: dmeekins - gmail
@@ -19,36 +19,43 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 CC=cl.exe
-CFLAGS=/nologo /DWIN32 /c
+CFLAGS=/nologo /D_WIN32 /c
 LDFLAGS=
-LIBS="c:\Program Files\Microsoft SDKs\Windows\v6.0A\lib\WS2_32.Lib"
+LIBS="C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\WS2_32.Lib"
 
-all: pwnat.exe
+all: pre-build pwnat.exe
 
-OBJS=obj/socket.obj obj/message.obj obj/client.obj obj/list.obj obj/destination.obj obj/udpserver.obj obj/udpclient.obj obj/pwnat.obj obj/xgetopt.obj obj/gettimeofday.obj
+pre-build:
+	@if not exist obj mkdir obj
+
+OBJS=obj/socket.obj obj/packet.obj obj/message.obj obj/client.obj obj/list.obj obj/destination.obj obj/udpserver.obj obj/udpclient.obj obj/pwnat.obj obj/xgetopt.obj obj/gettimeofday.obj
 pwnat.exe: $(OBJS)
 	link.exe /NOLOGO /OUT:pwnat.exe $(LDFLAGS) $(OBJS) $(LIBS)
 
+# obj/strlcpy.obj: src/strlcpy.c src/common.h
+#	$(CC) $(CFLAGS) /Fo$@ /c src/strlcpy.c
+obj/packet.obj: src/packet.c src/common.h src/packet.h
+	$(CC) $(CFLAGS) /Fo$@ /c src/packet.c
 obj/list.obj: src/list.c src/list.h src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/list.c
 obj/socket.obj: src/socket.c src/socket.h src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/socket.c
 obj/client.obj: src/client.c src/client.h src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/client.c
 obj/message.obj: src/message.c src/message.h src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/message.c
 obj/destination.obj: src/destination.c src/destination.h
-	$(CC) $(CFLAGS) -o $@ -c $<
-obj/udpclient.obj: src/udpclient.c src/list.h src/socket.h src/client.h src/message.h csrc/ommon.h
-	$(CC) $(CFLAGS) -o $@ -c $<
-obj/udpserver.obj: src/udpserver.c src/list.h src/socket.h src/client.h src/message.h src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
-obj/pwnat.obj: src/pwnat.c src/common.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/destination.c
+obj/udpclient.obj: src/udpclient.c src/list.h src/packet.h src/socket.h src/client.h src/message.h src/common.h
+	$(CC) $(CFLAGS) /Fo$@ /c src/udpclient.c
 obj/xgetopt.obj: src/xgetopt.c src/xgetopt.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/xgetopt.c
 obj/gettimeofday.obj: src/gettimeofday.c src/gettimeofday.h
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) /Fo$@ /c src/gettimeofday.c
+obj/udpserver.obj: src/udpserver.c src/list.h src/packet.h src/socket.h src/client.h src/message.h src/common.h src/destination.h
+	$(CC) $(CFLAGS) /Fo$@ /c src/udpserver.c
+obj/pwnat.obj: src/pwnat.c src/common.h
+	$(CC) $(CFLAGS) /Fo$@ /c src/pwnat.c
 
 clean:
 	del obj/*.obj pwnat.exe
