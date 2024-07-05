@@ -28,8 +28,15 @@
 #ifdef _WIN32
 #  include <winsock2.h>
 #  include <ws2tcpip.h>
-    // WINSOCK_API_LINKAGE const char WSAAPI inet_ntop(int af, const void src, char *dst, socklen_t size);
-    // WINSOCK_API_LINKAGE int WSAAPI inet_pton(int af, const char* src, void *dst);
+
+#ifndef InetNtopA
+    WINSOCK_API_LINKAGE const char WSAAPI inet_ntop(int af, const void src, char *dst, socklen_t size);
+#endif
+
+#ifndef InetPtonA
+    WINSOCK_API_LINKAGE int WSAAPI inet_pton(int af, const char* src, void *dst);
+#endif
+
     typedef unsigned char	    u_int8_t;
     typedef unsigned short	    u_int16_t;
 

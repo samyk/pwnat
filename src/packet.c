@@ -34,7 +34,11 @@ int create_listen_socket()
     listen_sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     if (listen_sock < 0)
     {
+#ifdef _WIN32
+        printf("Couldn't create privileged icmp socket (you likely need to `administrator`): [error]%d\n",WSAGetLastError());
+#else
         printf("Couldn't create privileged icmp socket (you likely need to `sudo` or run as root): %s\n", strerror(errno));
+#endif
         return -1;
     }
 
@@ -45,7 +49,11 @@ int create_listen_socket()
     if (fcntl(listen_sock, F_SETFL, O_NONBLOCK) == -1)
 #endif
     {
+#ifdef _WIN32
+        printf("F_SETFL: [error]%s", WSAGetLastError());
+#else
         printf("F_SETFL: %s", strerror(errno));
+#endif
         return -1;
     }
 
@@ -59,7 +67,11 @@ int create_icmp_socket()
     icmp_sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
     if (icmp_sock < 0)
     {
+#ifdef _WIN32
+        printf("Couldn't create privileged raw socket (you likely need to `administrator`): [error]%d\n",WSAGetLastError());
+#else
         printf("Couldn't create privileged raw socket (you likely need to `sudo` or run as root): %s\n", strerror(errno));
+#endif
         return -1;
     }
 
@@ -150,7 +162,11 @@ int send_icmp( int icmp_sock, struct sockaddr_in *rsrc,  struct sockaddr_in *des
     free(packet);
     //err = sendto(icmp_sock, (const void*)ip_pkt, pkt_len, 0, (struct sockaddr*)dest_addr, sizeof(struct sockaddr));
     if (err < 0) {
+#ifdef _WIN32
+        printf("Failed to send ICMP packet: [error]%s\n", WSAGetLastError());
+#else
         printf("Failed to send ICMP packet: %s\n", strerror(errno));
+#endif
         return -1;
     }
     else if (err != pkt_len)

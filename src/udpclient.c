@@ -143,7 +143,7 @@ int udpclient(int argc, char* argv[])
         #ifndef _WIN32
             printf("Couldn't resolve server address: '%s': %s\n", phost, hstrerror(h_errno));
         #else
-            printf("Couldn't resolve server address: '%s': %s\n", phost, WSAGetLastError(h_errno));
+            printf("Couldn't resolve server address: '%s': %s\n", phost, WSAGetLastError());
         #endif
         return 1;
     }
