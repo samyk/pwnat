@@ -16,7 +16,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <http: //www.gnu.org/licenses/>.
 
 # Uncomment appropriate one for the system this is compiling for
 OS=LINUX
@@ -42,29 +42,29 @@ pwnat: src/pwnat.c ${OBJS}
 #
 # Supporting code
 #
-src/strlcpy.o:     src/strlcpy.c     src/common.h
+src/strlcpy.o: src/strlcpy.c src/common.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/packet.o:      src/packet.c      src/common.h src/packet.h
+src/packet.o: src/packet.c src/common.h src/packet.h  src/message.h src/destination.h src/client.h src/socket.h src/list.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/list.o:        src/list.c        src/common.h src/list.h
+src/list.o: src/list.c src/common.h src/list.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/socket.o:      src/socket.c      src/common.h src/socket.h
+src/socket.o: src/socket.c src/common.h src/socket.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/client.o:      src/client.c      src/common.h src/client.h
+src/client.o: src/client.c src/common.h src/client.h  src/socket.h src/message.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/message.o:     src/message.c     src/common.h src/message.h
+src/message.o: src/message.c src/common.h src/message.h  src/socket.h
 	${CC} ${CFLAGS} -o $@ -c $<
 src/destination.o: src/destination.c src/common.h src/destination.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/udpclient.o:   src/udpclient.c   src/common.h src/packet.h src/list.h src/socket.h src/client.h src/message.h
+src/udpclient.o: src/udpclient.c src/common.h src/packet.h src/list.h src/socket.h src/client.h src/message.h
 	${CC} ${CFLAGS} -o $@ -c $<
-src/udpserver.o:   src/udpserver.c   src/common.h src/packet.h src/list.h src/socket.h src/client.h src/message.h src/destination.h
+src/udpserver.o: src/udpserver.c src/common.h src/packet.h src/list.h src/socket.h src/client.h src/message.h src/destination.h
 	${CC} ${CFLAGS} -o $@ -c $<
 
 #
 # Clean compiled and temporary files
 #
-clean:
+clean: 
 ifeq (${OS}, CYGWIN)
 	rm -f pwnat.exe
 else
