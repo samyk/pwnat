@@ -34,15 +34,15 @@ pwnat.exe: $(OBJS)
 
 # obj/strlcpy.obj: src/strlcpy.c src/common.h
 #	$(CC) $(CFLAGS) /Fo$@ /c src/strlcpy.c
-obj/packet.obj: src/packet.c src/common.h src/packet.h
+obj/packet.obj: src/packet.c src/common.h src/packet.h src/message.h src/destination.h src/client.h src/socket.h src/list.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/packet.c
 obj/list.obj: src/list.c src/list.h src/common.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/list.c
 obj/socket.obj: src/socket.c src/socket.h src/common.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/socket.c
-obj/client.obj: src/client.c src/client.h src/common.h
+obj/client.obj: src/client.c src/client.h src/common.h src/socket.h src/message.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/client.c
-obj/message.obj: src/message.c src/message.h src/common.h
+obj/message.obj: src/message.c src/message.h src/common.h src/socket.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/message.c
 obj/destination.obj: src/destination.c src/destination.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/destination.c
@@ -58,4 +58,4 @@ obj/pwnat.obj: src/pwnat.c src/common.h
 	$(CC) $(CFLAGS) /Fo$@ /c src/pwnat.c
 
 clean:
-	del obj/*.obj pwnat.exe
+	del obj\*.obj pwnat.exe
