@@ -44,7 +44,7 @@ int create_listen_socket()
 
 #ifdef _WIN32
     unsigned long flags = 1;
-    if (ioctlsocket(listen_sock, FIONBIO, &flags) != SOCKET_ERROR)
+    if (ioctlsocket(listen_sock, FIONBIO, &flags) == SOCKET_ERROR)
 #else
     if (fcntl(listen_sock, F_SETFL, O_NONBLOCK) == -1)
 #endif
