@@ -75,6 +75,7 @@ bool isnumber(const char* str) {
  */
 int udpclient(int argc, char* argv[])
 {
+    (void)argc;  // unused
     char *lhost, *lport, *phost, *pport, *rhost, *rport;
     list_t *clients;
     list_t *conn_clients;

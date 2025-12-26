@@ -56,6 +56,7 @@ void list_free(list_t *list);
 
 static _inline_ int int_cmp(int *i, int *j, size_t sz)
 {
+    (void)sz;  // must be compatible with memcpy signature
     return *i - *j;
 }
 
