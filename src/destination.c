@@ -29,7 +29,7 @@ destination_t *destination_create(const char *address)
     destination_t *dst;
     char *cp;
 
-    dst = calloc(sizeof(destination_t), 1);
+    dst = calloc(1, sizeof(*dst));
     if (!dst)
         goto fail;
 
