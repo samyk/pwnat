@@ -24,7 +24,9 @@ OS=LINUX
 #OS=CYGWIN
 
 CC=gcc
-CFLAGS=-Wall -Wshadow -Wpointer-arith -Wwrite-strings -D ${OS}
+CFLAGS=-Wall -Wextra -Wpedantic -Wshadow -Wpointer-arith -Wwrite-strings \
+       -D ${OS} \
+       -fsanitize=address
 
 ifeq (${OS}, SOLARIS)
 LDFLAGS=-lnsl -lsocket -lresolv
