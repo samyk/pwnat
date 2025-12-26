@@ -149,9 +149,9 @@ int udpserver(int argc, char *argv[])
     if (argc > allowed_start)
     {
         allowed_destinations = list_create(sizeof(destination_t),
-                                           p_destination_cmp,
-                                           p_destination_copy,
-                                           p_destination_free);
+                                           destination_cmp,
+                                           destination_copy,
+                                           destination_free);
         if (!allowed_destinations)
             goto done;
         for (i = allowed_start; i < argc; i++)
@@ -166,8 +166,8 @@ int udpserver(int argc, char *argv[])
     }
 
     /* Create an empty list for the clients */
-    clients = list_create(sizeof(client_t), p_client_cmp, p_client_copy,
-                          p_client_free);
+    clients = list_create(sizeof(client_t), client_cmp, client_copy,
+                          client_free);
     if(!clients)
         goto done;
 

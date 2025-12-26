@@ -28,11 +28,12 @@
  * and uses the cmp, copy, and free functions. If any of the function pointers
  * are NULL, they will be set to memcmp, memcpy, or free.
  */
-list_t *list_create(int obj_sz,
-                    int (*obj_cmp)(const void *, const void *, size_t),
-                    void* (*obj_copy)(void *, const void *, size_t),
-                    void (*obj_free)(void *))
-{
+list_t *list_create_impl(
+    int obj_sz,
+    typeof(memcmp)* obj_cmp,
+    typeof(memcpy)* obj_copy,
+    typeof(free)*   obj_free
+) {
     list_t *new;
 
     new = malloc(sizeof(*new));

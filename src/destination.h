@@ -30,10 +30,6 @@ typedef struct destination {
         char *data;
 } destination_t;
 
-#define p_destination_copy ((void* (*)(void *, const void *, size_t))&destination_copy)
-#define p_destination_cmp ((int (*)(const void *, const void *, size_t))&destination_cmp)
-#define p_destination_free ((void (*)(void *))&destination_free)
-
 destination_t *destination_create(const char *address);
 destination_t *destination_copy(destination_t *dst, destination_t *src, size_t len);
 int destination_cmp(destination_t *c1, destination_t *c2, size_t len);

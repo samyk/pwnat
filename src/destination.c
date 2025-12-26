@@ -66,6 +66,7 @@ fail:
 
 destination_t *destination_copy(destination_t *dst, destination_t *src, size_t len)
 {
+    (void)len;  // must be compatible with memcpy signature
     size_t host_len, port_len;
 
     host_len = src->host ? strlen(src->host) : 0;
@@ -116,6 +117,8 @@ static int strcmp_null(const char *s1, const char *s2)
 
 int destination_cmp(destination_t *d1, destination_t *d2, size_t len)
 {
+    (void)len;  // must be compatible with memcmp signature
+
     int cmp;
 
     cmp = strcmp_null(d1->host, d2->host);

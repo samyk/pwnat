@@ -82,6 +82,7 @@ client_t *client_create(uint16_t id, socket_t *tcp_sock, socket_t *udp_sock,
  */
 client_t *client_copy(client_t *dst, client_t *src, size_t len)
 {
+    (void)len;  // must be compatible with memcpy signature
     if(!dst || !src)
         return NULL;
 
@@ -103,6 +104,7 @@ client_t *client_copy(client_t *dst, client_t *src, size_t len)
  */
 int client_cmp(client_t *c1, client_t *c2, size_t len)
 {
+    (void)len;  // must be compatible with memcmp signature
     return c1->id - c2->id;
 }
 

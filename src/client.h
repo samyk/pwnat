@@ -89,11 +89,6 @@ int client_check_and_send_keepalive(client_t *client, struct timeval curr_tv);
 void client_reset_keepalive(client_t *client);
 int client_timed_out(client_t *client, struct timeval curr_tv);
 
-/* Function pointers to use when making a list_t of clients */
-#define p_client_copy ((void* (*)(void *, const void *, size_t))&client_copy)
-#define p_client_cmp ((int (*)(const void *, const void *, size_t))&client_cmp)
-#define p_client_free ((void (*)(void *))&client_free)
-
 /* Inline functions as wrappers for handling the file descriptors in the
  * client's sockets */
 

@@ -75,6 +75,7 @@ bool isnumber(const char* str) {
  */
 int udpclient(int argc, char* argv[])
 {
+    (void)argc;  // unused
     char *lhost, *lport, *phost, *pport, *rhost, *rport;
     list_t *clients;
     list_t *conn_clients;
@@ -161,13 +162,13 @@ int udpclient(int argc, char* argv[])
     next_req_id = rand() % 0xffff;
     
     /* Create an empty list for the clients */
-    clients = list_create(sizeof(client_t), p_client_cmp, p_client_copy,
-                          p_client_free);
+    clients = list_create(sizeof(client_t), client_cmp, client_copy,
+                          client_free);
     ERROR_GOTO(clients == NULL, "Error creating clients list.", done);
 
     /* Create and empty list for the connecting clients */
-    conn_clients = list_create(sizeof(client_t), p_client_cmp, p_client_copy,
-                               p_client_free);
+    conn_clients = list_create(sizeof(client_t), client_cmp, client_copy,
+                               client_free);
     ERROR_GOTO(conn_clients == NULL, "Error creating clients list.", done);
 
     /* Create a TCP server socket to listen for incoming connections */
