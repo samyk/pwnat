@@ -1,3 +1,4 @@
+*.o
 obj/*
 pwnat*
 .DS_Store
