@@ -22,6 +22,9 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "common.h"
 
 #define LIST_INIT_SIZE 10 /* Start off an array with 10 elements */
@@ -33,17 +36,27 @@ typedef struct list {
     int length;     /* Actual length of the pointer array */
 
     /* Function pointers to use for specific type of data types */
-    int (*obj_cmp)(const void *, const void *, size_t);
-    void* (*obj_copy)(void *, const void *, size_t);
-    void (*obj_free)(void *);
+    typeof(memcmp)* obj_cmp;
+    typeof(memcpy)* obj_copy;
+    typeof(free)*   obj_free;
 } list_t;
 
 #define LIST_LEN(l) ((l)->num_objs)
 
-list_t *list_create(int obj_sz,
-                    int (*obj_cmp)(const void *, const void *, size_t),
-                    void* (*obj_copy)(void *, const void *, size_t),
-                    void (*obj_free)(void *));
+list_t *list_create_impl(
+        int obj_sz,
+        typeof(memcmp)* obj_cmp,
+        typeof(memcpy)* obj_copy,
+        typeof(free)*   obj_free);
+
+#define list_create(obj_sz, obj_cmp, obj_copy, obj_free) \
+    list_create_impl(                                    \
+        obj_sz,                                          \
+        (typeof(memcmp)*)&obj_cmp,                       \
+        (typeof(memcpy)*)&obj_copy,                      \
+        (typeof(free)  *)&obj_free                       \
+    )
+
 void *list_add(list_t *list, void *obj);
 void *list_get(list_t *list, void *obj);
 void *list_get_at(list_t *list, int i);
